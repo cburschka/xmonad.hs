@@ -11,7 +11,6 @@ main = do
      xmproc <- spawnPipe "xmobar"
      xmonad $ defaultConfig
      	    {
-		terminal = "gnome-terminal",
 		modMask = mod4Mask,
 		keys = keys defaultConfig `mappend`
 		\c -> fromList [
