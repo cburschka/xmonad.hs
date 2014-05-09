@@ -3,15 +3,16 @@ Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
        , fgColor = "grey"
        , position = Top
        , commands = [ 
-		      Run Weather "EGPF" ["-t"," <tempC>C","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
+		      Run Weather "EDDF" ["-t"," <tempC>C","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Cpu ["-L","15","-H","50","--normal","green","--high","red"] 10
                     , Run Memory [] 10
                     , Run Swap [] 10
  		    , Run StdinReader
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run CommandReader "ledmon" "LED"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template =                  "%cpu% | %memory% * %swap% }{ %date% %EGPF%"
+       , template =                  "%cpu% | %memory% | %swap% }{ %date% %EDDF%"
 --       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %EGPF%"
 }
