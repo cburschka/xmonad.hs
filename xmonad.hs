@@ -47,6 +47,6 @@ pidginLayout = withIM (18/100) (Role "buddy_list") gridLayout
     gridLayout = Grid
 
 myManageHook = composeAll [
-    className =? "Pidgin" --> doShift "Chat",
-    className =? "Thunderbird" --> doShift "Mail"
+      className =? "Pidgin" --> doShift "Chat"
+    , className =? "Thunderbird" --> doShift "Mail"
   ]
