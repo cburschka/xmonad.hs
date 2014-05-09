@@ -1,4 +1,7 @@
 import XMonad
+
+import XMonad.Hooks.ManageDocks
+
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Actions.Volume
 import XMonad.Util.Dzen
@@ -11,6 +14,8 @@ main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
         {
+            manageHook = manageDocks <+> manageHook defaultConfig,
+            layoutHook = avoidStruts  $  layoutHook defaultConfig,
             modMask = mod4Mask,
             keys = keys defaultConfig `mappend`
                 \c -> fromList [
