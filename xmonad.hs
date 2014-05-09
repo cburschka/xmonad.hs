@@ -22,11 +22,11 @@ main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
         {
-            workspaces = myWorkspaces,
-            manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig,
-            layoutHook = avoidStruts $ myLayout,
-            logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 },
-            modMask = mod4Mask,
+            workspaces = myWorkspaces
+          , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
+          , layoutHook = avoidStruts $ myLayout
+          , logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 }
+          , modMask = mod4Mask
             keys = keys defaultConfig `mappend`
                 \c -> fromList [
                    ((0, 0x1008FF11), setMute False >> lowerVolume 4 >> return()),
