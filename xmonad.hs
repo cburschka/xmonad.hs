@@ -27,15 +27,12 @@ main = do
           , layoutHook = avoidStruts $ myLayout
           , logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 }
           , modMask = mod4Mask
-            keys = keys defaultConfig `mappend`
-                \c -> fromList [
-                   ((0, 0x1008FF11), setMute False >> lowerVolume 4 >> return()),
-                   ((0, 0x1008FF13), setMute False >> raiseVolume 4 >> return()),
-                   ((0, 0x1008FF12), toggleMute >> return())
-                ]
         } `additionalKeys`
         [
             ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
+          , ((0, xF86XK_AudioRaiseVolume), setMute False >> lowerVolume 4 >> return())
+          , ((0, xF86XK_AudioLowerVolume), setMute False >> raiseVolume 4 >> return())
+          , ((0, xF86XK_AudioMute), toggleMute >> return())
         ]
 
 
