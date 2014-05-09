@@ -4,11 +4,13 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig(additionalKeys)
 import Graphics.X11.ExtraTypes.XF86
 
+import XMonad.Hooks.DynamicLog
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Actions.Volume
 import XMonad.Util.Dzen
 import Data.Map    (fromList)
 import Data.Monoid (mappend)
+import System.IO
 
 --alert = dzenConfig return . show
 
@@ -18,6 +20,7 @@ main = do
         {
             manageHook = manageDocks <+> manageHook defaultConfig,
             layoutHook = avoidStruts  $  layoutHook defaultConfig,
+            logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 },
             modMask = mod4Mask,
             keys = keys defaultConfig `mappend`
                 \c -> fromList [

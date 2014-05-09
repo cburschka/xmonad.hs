@@ -13,6 +13,6 @@ Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template =                  "%cpu% | %memory% | %swap% }{ %date% %EDDF%"
+       , template =                  "%cpu% | %memory% | %swap% | %StdinReader% }{ %date% %EDDF%"
 --       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %EGPF%"
 }
