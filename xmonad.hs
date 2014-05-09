@@ -1,6 +1,8 @@
 import XMonad
 
 import XMonad.Hooks.ManageDocks
+import XMonad.Util.EZConfig(additionalKeys)
+import Graphics.X11.ExtraTypes.XF86
 
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Actions.Volume
@@ -23,4 +25,7 @@ main = do
                    ((0, 0x1008FF13), setMute False >> raiseVolume 4 >> return()),
                    ((0, 0x1008FF12), toggleMute >> return())
                 ]
-        }
+        } `additionalKeys`
+        [
+            ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
+        ]
