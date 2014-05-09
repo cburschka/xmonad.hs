@@ -15,6 +15,7 @@ import System.IO
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
+import XMonad.StackSet (view)
 
 --alert = dzenConfig return . show
 
@@ -30,6 +31,11 @@ main = do
         } `additionalKeys`
         [
             ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
+          , ((0, xF86XK_HomePage), spawn "startfirefox" >> (windows . view) "Web" >> return())
+          , ((0, xF86XK_Messenger), spawn "pidgin" >> (windows . view) "Chat" >> return())
+          , ((0, xF86XK_Mail), spawn "thunderbird" >> (windows . view) "Mail" >> return())
+          , ((controlMask, xF86XK_Mail), spawn "thunderbird -compose" >> (windows . view) "Mail" >> return())
+          , ((0, xF86XK_Favorites), spawn $ XMonad.terminal defaultConfig)
           , ((0, xF86XK_AudioRaiseVolume), setMute False >> lowerVolume 4 >> return())
           , ((0, xF86XK_AudioLowerVolume), setMute False >> raiseVolume 4 >> return())
           , ((0, xF86XK_AudioMute), toggleMute >> return())
@@ -37,7 +43,7 @@ main = do
 
 
 
-myWorkspaces = ["1","2","3","4","5","6", "7", "Chat", "Mail"]
+myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
 
 -- Pidgin
 myLayout = onWorkspace "Chat" pidginLayout (layoutHook defaultConfig)
@@ -49,4 +55,5 @@ pidginLayout = withIM (18/100) (Role "buddy_list") gridLayout
 myManageHook = composeAll [
       className =? "Pidgin" --> doShift "Chat"
     , className =? "Thunderbird" --> doShift "Mail"
+    , className =? "Firefox" --> doShift "Web"
   ]
