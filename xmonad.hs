@@ -1,4 +1,5 @@
 import XMonad
+import Data.List   (isPrefixOf)
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig(additionalKeys)
@@ -60,5 +61,5 @@ main = do
               className =? "Pidgin" --> doShift "Chat"
             , className =? "Thunderbird" --> doShift "Mail"
             , className =? "Firefox" --> doShift "Web"
-            , className =? "LyX" --> doShift "2"
+            , fmap ("Lyx" `isPrefixOf`) className --> doShift "2"
           ]
