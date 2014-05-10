@@ -4,16 +4,16 @@ import Data.Monoid (mappend)
 
 import Graphics.X11.ExtraTypes.XF86
 
-import System.IO
+import System.IO (hPutStrLn)
 
 import XMonad
 
-import XMonad.Actions.Volume
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Layout.PerWorkspace
-import XMonad.Layout.IM
-import XMonad.Layout.Grid
+import qualified XMonad.Actions.Volume as Volume
+import qualified XMonad.Hooks.DynamicLog as Log
+import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import qualified XMonad.Layout.IM as IM
+import qualified XMonad.Layout.Grid as Grid
 import XMonad.StackSet (view)
 --import XMonad.Util.Dzen
 import XMonad.Util.EZConfig (additionalKeys)
@@ -28,7 +28,7 @@ main = do
             workspaces = myWorkspaces
           , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
           , layoutHook = avoidStruts $ myLayout $ layoutHook defaultConfig
-          , logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 }
+          , logHook = Log.dynamicLogWithPP Log.xmobarPP { Log.ppOutput = hPutStrLn xmproc , Log.ppTitle = Log.xmobarColor "green" "" . Log.shorten 50 }
           , modMask = mod4Mask
         } `additionalKeys`
         [
@@ -44,9 +44,9 @@ main = do
 
 -- Volume keys
 
-          , ((0, xF86XK_AudioLowerVolume), setMute False >> lowerVolume 4 >> return())
-          , ((0, xF86XK_AudioRaiseVolume), setMute False >> raiseVolume 4 >> return())
-          , ((0, xF86XK_AudioMute), toggleMute >> return())
+          , ((0, xF86XK_AudioLowerVolume), Volume.setMute False >> Volume.lowerVolume 4 >> return())
+          , ((0, xF86XK_AudioRaiseVolume), Volume.setMute False >> Volume.raiseVolume 4 >> return())
+          , ((0, xF86XK_AudioMute), Volume.toggleMute >> return())
         ]
     where
         wsview id = (windows . view) id
@@ -56,7 +56,7 @@ main = do
 
         myLayout = onWorkspace "Chat" chatLayout
             where
-                chatLayout = withIM (18/100) (Role "buddy_list") Grid
+                chatLayout = IM.withIM (15/100) (IM.Role "buddy_list") Grid.Grid
 
         myManageHook = composeAll [
               className =? "Pidgin" --> doShift "Chat"
