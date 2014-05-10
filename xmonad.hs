@@ -47,10 +47,8 @@ myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
 
 -- Pidgin
 myLayout = onWorkspace "Chat" pidginLayout (layoutHook defaultConfig)
-
-pidginLayout = withIM (18/100) (Role "buddy_list") gridLayout
     where
-    gridLayout = Grid
+        pidginLayout = withIM (18/100) (Role "buddy_list") Grid
 
 myManageHook = composeAll [
       className =? "Pidgin" --> doShift "Chat"
