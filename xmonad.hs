@@ -25,7 +25,7 @@ main = do
         {
             workspaces = myWorkspaces
           , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
-          , layoutHook = avoidStruts $ myLayout
+          , layoutHook = avoidStruts $ myLayout $ layoutHook defaultConfig
           , logHook = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50 }
           , modMask = mod4Mask
         } `additionalKeys`
@@ -52,9 +52,9 @@ main = do
 
         myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
 
-        myLayout = onWorkspace "Chat" pidginLayout (layoutHook defaultConfig)
+        myLayout = onWorkspace "Chat" chatLayout
             where
-                pidginLayout = withIM (18/100) (Role "buddy_list") Grid
+                chatLayout = withIM (18/100) (Role "buddy_list") Grid
 
         myManageHook = composeAll [
               className =? "Pidgin" --> doShift "Chat"
