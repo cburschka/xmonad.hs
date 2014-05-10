@@ -1,22 +1,23 @@
-import XMonad
 import Data.List   (isPrefixOf)
-
-import XMonad.Hooks.ManageDocks
-import XMonad.Util.EZConfig(additionalKeys)
-import Graphics.X11.ExtraTypes.XF86
-
-import XMonad.Hooks.DynamicLog
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Actions.Volume
-import XMonad.Util.Dzen
 import Data.Map    (fromList)
 import Data.Monoid (mappend)
+
+import Graphics.X11.ExtraTypes.XF86
+
 import System.IO
 
+import XMonad
+
+import XMonad.Actions.Volume
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.StackSet (view)
+--import XMonad.Util.Dzen
+import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.Run (spawnPipe)
 
 --alert = dzenConfig return . show
 
