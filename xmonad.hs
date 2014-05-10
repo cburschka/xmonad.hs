@@ -30,29 +30,35 @@ main = do
           , modMask = mod4Mask
         } `additionalKeys`
         [
+
+-- Launchers
+
             ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
-          , ((0, xF86XK_HomePage), spawn "/home/christoph/.bin/ff" >> (windows . view) "Web" >> return())
-          , ((0, xF86XK_Messenger), spawn "pidgin" >> (windows . view) "Chat" >> return())
-          , ((0, xF86XK_Mail), spawn "thunderbird" >> (windows . view) "Mail" >> return())
-          , ((controlMask, xF86XK_Mail), spawn "thunderbird -compose" >> (windows . view) "Mail" >> return())
+          , ((0, xF86XK_HomePage), wslaunch "/home/christoph/.bin/ff" "Web")
+          , ((0, xF86XK_Messenger), wslaunch "pidgin" "Chat")
+          , ((0, xF86XK_Mail), wslaunch "thunderbird" "Mail")
+          , ((controlMask, xF86XK_Mail), wslaunch "thunderbird -compose" "Mail")
           , ((0, xF86XK_Favorites), spawn $ XMonad.terminal defaultConfig)
+
+-- Volume keys
+
           , ((0, xF86XK_AudioRaiseVolume), setMute False >> lowerVolume 4 >> return())
           , ((0, xF86XK_AudioLowerVolume), setMute False >> raiseVolume 4 >> return())
           , ((0, xF86XK_AudioMute), toggleMute >> return())
         ]
-
-
-
-myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
-
--- Pidgin
-myLayout = onWorkspace "Chat" pidginLayout (layoutHook defaultConfig)
     where
-        pidginLayout = withIM (18/100) (Role "buddy_list") Grid
+        wsview id = (windows . view) id
+        wslaunch cmd id = spawn cmd >> wsview id >> return()
 
-myManageHook = composeAll [
-      className =? "Pidgin" --> doShift "Chat"
-    , className =? "Thunderbird" --> doShift "Mail"
-    , className =? "Firefox" --> doShift "Web"
-    , className =? "LyX" --> doShift "2"
-  ]
+        myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
+
+        myLayout = onWorkspace "Chat" pidginLayout (layoutHook defaultConfig)
+            where
+                pidginLayout = withIM (18/100) (Role "buddy_list") Grid
+
+        myManageHook = composeAll [
+              className =? "Pidgin" --> doShift "Chat"
+            , className =? "Thunderbird" --> doShift "Mail"
+            , className =? "Firefox" --> doShift "Web"
+            , className =? "LyX" --> doShift "2"
+          ]
