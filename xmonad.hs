@@ -42,8 +42,8 @@ main = do
 
 -- Volume keys
 
-          , ((0, xF86XK_AudioRaiseVolume), setMute False >> lowerVolume 4 >> return())
-          , ((0, xF86XK_AudioLowerVolume), setMute False >> raiseVolume 4 >> return())
+          , ((0, xF86XK_AudioLowerVolume), setMute False >> lowerVolume 4 >> return())
+          , ((0, xF86XK_AudioRaiseVolume), setMute False >> raiseVolume 4 >> return())
           , ((0, xF86XK_AudioMute), toggleMute >> return())
         ]
     where
