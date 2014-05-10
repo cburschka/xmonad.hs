@@ -56,4 +56,5 @@ myManageHook = composeAll [
       className =? "Pidgin" --> doShift "Chat"
     , className =? "Thunderbird" --> doShift "Mail"
     , className =? "Firefox" --> doShift "Web"
+    , className =? "LyX" --> doShift "2"
   ]
