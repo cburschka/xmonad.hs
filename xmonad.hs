@@ -8,7 +8,7 @@ import System.IO (hPutStrLn)
 
 import XMonad
 
-import qualified XMonad.Actions.Volume as Volume
+import XMonad.Actions.Volume (lowerVolume, raiseVolume, setMute, toggleMute)
 import qualified XMonad.Hooks.DynamicLog as Log
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -44,9 +44,9 @@ main = do
 
 -- Volume keys
 
-          , ([(0, xF86XK_AudioLowerVolume)], Volume.setMute False >> Volume.lowerVolume 4 >> return())
-          , ([(0, xF86XK_AudioRaiseVolume)], Volume.setMute False >> Volume.raiseVolume 4 >> return())
-          , ([(0, xF86XK_AudioMute)], Volume.toggleMute >> return())
+          , ([(0, xF86XK_AudioLowerVolume)], setMute False >> lowerVolume 4 >> return())
+          , ([(0, xF86XK_AudioRaiseVolume)], setMute False >> raiseVolume 4 >> return())
+          , ([(0, xF86XK_AudioMute)], toggleMute >> return())
         ]
     where
         multiBind = (foldr (++) []) . (map (\(xs,y) -> [(x,y) | x<-xs]))
