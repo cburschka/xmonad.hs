@@ -31,7 +31,7 @@ main = do
         } `additionalKeys`
         [
             ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
-          , ((0, xF86XK_HomePage), spawn "startfirefox" >> (windows . view) "Web" >> return())
+          , ((0, xF86XK_HomePage), spawn "/home/christoph/.bin/ff" >> (windows . view) "Web" >> return())
           , ((0, xF86XK_Messenger), spawn "pidgin" >> (windows . view) "Chat" >> return())
           , ((0, xF86XK_Mail), spawn "thunderbird" >> (windows . view) "Mail" >> return())
           , ((controlMask, xF86XK_Mail), spawn "thunderbird -compose" >> (windows . view) "Mail" >> return())
