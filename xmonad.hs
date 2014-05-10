@@ -30,25 +30,26 @@ main = do
           , layoutHook = avoidStruts $ myLayout $ layoutHook defaultConfig
           , logHook = Log.dynamicLogWithPP Log.xmobarPP { Log.ppOutput = hPutStrLn xmproc , Log.ppTitle = Log.xmobarColor "green" "" . Log.shorten 50 }
           , modMask = mod4Mask
-        } `additionalKeys`
+        } `additionalKeys` multiBind
         [
 
 -- Launchers
 
-            ((0, xF86XK_Sleep), spawn "xscreensaver-command -lock")
-          , ((0, xF86XK_HomePage), wslaunch "/home/christoph/.bin/ff" "Web")
-          , ((0, xF86XK_Messenger), wslaunch "pidgin" "Chat")
-          , ((0, xF86XK_Mail), wslaunch "thunderbird" "Mail")
-          , ((controlMask, xF86XK_Mail), wslaunch "thunderbird -compose" "Mail")
-          , ((0, xF86XK_Favorites), spawn $ XMonad.terminal defaultConfig)
+            ([(0, xF86XK_Sleep)], spawn "xscreensaver-command -lock")
+          , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "/home/christoph/.bin/ff" "Web")
+          , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
+          , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
+          , ([(controlMask, xF86XK_Mail)], wslaunch "thunderbird -compose" "Mail")
+          , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
 
 -- Volume keys
 
-          , ((0, xF86XK_AudioLowerVolume), Volume.setMute False >> Volume.lowerVolume 4 >> return())
-          , ((0, xF86XK_AudioRaiseVolume), Volume.setMute False >> Volume.raiseVolume 4 >> return())
-          , ((0, xF86XK_AudioMute), Volume.toggleMute >> return())
+          , ([(0, xF86XK_AudioLowerVolume)], Volume.setMute False >> Volume.lowerVolume 4 >> return())
+          , ([(0, xF86XK_AudioRaiseVolume)], Volume.setMute False >> Volume.raiseVolume 4 >> return())
+          , ([(0, xF86XK_AudioMute)], Volume.toggleMute >> return())
         ]
     where
+        multiBind = (foldr (++) []) . (map (\(xs,y) -> [(x,y) | x<-xs]))
         wsview id = (windows . view) id
         wslaunch cmd id = spawn cmd >> wsview id >> return()
 
