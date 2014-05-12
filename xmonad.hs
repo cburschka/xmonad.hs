@@ -41,19 +41,26 @@ main = do
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
           , ([(controlMask, xF86XK_Mail)], wslaunch "thunderbird -compose" "Mail")
           , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
+          , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
 
 -- Volume keys
 
           , ([(0, xF86XK_AudioLowerVolume)], lowerVolume 4 >> return())
           , ([(0, xF86XK_AudioRaiseVolume)], raiseVolume 4 >> return())
           , ([(0, xF86XK_AudioMute)], toggleMute >> return())
+
+          , ([(mod4Mask .|. mod1Mask, xK_space)], spawn $ rb "play-pause")
+          , ([(mod4Mask .|. mod1Mask, xK_Left)], spawn $ rb "previous")
+          , ([(mod4Mask .|. mod1Mask, xK_Right)], spawn $ rb "next")
+          , ([(mod4Mask, xF86XK_AudioLowerVolume)], spawn $ rb "volume-down")
+          , ([(mod4Mask, xF86XK_AudioRaiseVolume)], spawn $ rb "volume-up")
         ]
     where
         multiBind = (foldr (++) []) . (map (\(xs,y) -> [(x,y) | x<-xs]))
         wsview id = (windows . view) id
         wslaunch cmd id = spawn cmd >> wsview id >> return()
 
-        myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat"]
+        myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat", "Music"]
 
         myLayout = onWorkspace "Chat" chatLayout
             where
@@ -64,4 +71,7 @@ main = do
             , className =? "Thunderbird" --> doShift "Mail"
             , className =? "Firefox" --> doShift "Web"
             , fmap ("Lyx" `isPrefixOf`) className --> doShift "2"
+            , className =? "Rhythmbox" --> doShift "Music"
           ]
+
+	rb a = "rhythmbox-client --no-start --" ++ a
