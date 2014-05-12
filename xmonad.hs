@@ -42,6 +42,7 @@ main = do
           , ([(controlMask, xF86XK_Mail)], wslaunch "thunderbird -compose" "Mail")
           , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
           , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
+          , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "lyx" "Write")
 
 -- Volume keys
 
@@ -60,7 +61,7 @@ main = do
         wsview id = (windows . view) id
         wslaunch cmd id = spawn cmd >> wsview id >> return()
 
-        myWorkspaces = (map show [1..9]) ++ ["Mail", "Web", "Chat", "Music"]
+        myWorkspaces = (map show [1..9]) ++ ["Write", "Mail", "Web", "Chat", "Music"]
 
         myLayout = onWorkspace "Chat" chatLayout
             where
@@ -70,7 +71,7 @@ main = do
               className =? "Pidgin" --> doShift "Chat"
             , className =? "Thunderbird" --> doShift "Mail"
             , className =? "Firefox" --> doShift "Web"
-            , fmap ("Lyx" `isPrefixOf`) className --> doShift "2"
+            , fmap ("Lyx" `isPrefixOf`) className --> doShift "Write"
             , className =? "Rhythmbox" --> doShift "Music"
           ]
 
