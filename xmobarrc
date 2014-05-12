@@ -4,6 +4,7 @@ Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
        , position = Top
        , commands = [ 
                       Run Weather "EDDF" ["-t", "FFM: <tempC>°C, rh <rh>%", "-L","10","-H","20","--normal","green","--high","red","--low","lightblue"] 36000
+                    , Run Volume "default" "Master" [] 10
                     , Run Cpu ["-L","15","-H","50","--normal","green","--high","red","-p","2"] 10
                     , Run Memory ["-t","Mem: <usedratio>%","-L", "25", "-H", "75", "--low","green","--high","red"] 10
                     , Run Swap [] 10
@@ -13,6 +14,6 @@ Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template =                  "%cpu% | %memory% | %swap% | %StdinReader% }{ %date% %EDDF%"
+       , template =                  "%cpu% | %memory% | %swap% | %StdinReader% }{ %date% | %default:Master% | %EDDF%"
 --       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %EGPF%"
 }
