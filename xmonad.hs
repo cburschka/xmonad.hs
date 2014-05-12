@@ -64,7 +64,7 @@ main = do
 
         myLayout = onWorkspace "Chat" chatLayout
             where
-                chatLayout = IM.withIM (15/100) (IM.Role "buddy_list") Grid.Grid
+                chatLayout = IM.withIM (12/100) (IM.Role "buddy_list") Grid.Grid
 
         myManageHook = composeAll [
               className =? "Pidgin" --> doShift "Chat"
