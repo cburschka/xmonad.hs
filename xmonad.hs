@@ -45,7 +45,7 @@ main = do
           , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "/home/christoph/.bin/ff" "Web")
           , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
-          , ([(controlMask, xF86XK_Mail)], wslaunch "thunderbird -compose" "Mail")
+          , ([(controlMask, xF86XK_Mail), (mod4Mask .|. shiftMask, xK_e)], wslaunch "thunderbird -compose" "Mail")
           , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
           , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
           , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "lyx" "Write")
