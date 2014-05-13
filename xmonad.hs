@@ -8,6 +8,7 @@ import System.IO (hPutStrLn)
 
 import XMonad
 
+import XMonad.Actions.CycleWS
 import XMonad.Actions.Volume (lowerVolume, raiseVolume, setMute, toggleMute)
 import qualified XMonad.Hooks.DynamicLog as Log
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
@@ -33,9 +34,14 @@ main = do
         } `additionalKeys` multiBind
         [
 
+            ([(mod4Mask, xK_Left)], prevWS)
+          , ([(mod4Mask, xK_Right)], nextWS)
+          , ([(mod4Mask .|. shiftMask, xK_Left)], shiftToPrev >> prevWS)
+          , ([(mod4Mask .|. shiftMask, xK_Right)], shiftToNext >> nextWS)
+
 -- Launchers
 
-            ([(0, xF86XK_Sleep)], spawn "xscreensaver-command -lock")
+          , ([(0, xF86XK_Sleep)], spawn "xscreensaver-command -lock")
           , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "/home/christoph/.bin/ff" "Web")
           , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
