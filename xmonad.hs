@@ -34,10 +34,19 @@ main = do
         } `additionalKeys` multiBind
         [
 
+-- Navigation
+
             ([(mod4Mask, xK_Left)], prevWS)
           , ([(mod4Mask, xK_Right)], nextWS)
           , ([(mod4Mask .|. shiftMask, xK_Left)], shiftToPrev >> prevWS)
           , ([(mod4Mask .|. shiftMask, xK_Right)], shiftToNext >> nextWS)
+
+-- Utility
+
+          , ([(controlMask, xK_Print)], spawn "sleep 0.2; scs -s")
+          , ([(0, xK_Print)], spawn "scs")
+          , ([(controlMask .|. mod4Mask, xK_Print)], spawn "sleep 0.2; scs -s up")
+          , ([(mod4Mask, xK_Print)], spawn "scs '' up")
 
 -- Launchers
 
