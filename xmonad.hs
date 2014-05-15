@@ -51,7 +51,7 @@ main = do
 -- Launchers
 
           , ([(0, xF86XK_Sleep), (mod4Mask .|. shiftMask, xK_Delete)], spawn "xscreensaver-command -lock")
-          , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "/home/christoph/.bin/ff" "Web")
+          , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "ifnotrunning firefox" "Web")
           , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
           , ([(controlMask, xF86XK_Mail), (mod4Mask .|. shiftMask, xK_e)], wslaunch "thunderbird -compose" "Mail")
