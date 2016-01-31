@@ -3,7 +3,7 @@ Config { font = "-misc-fixed-*-*-*-*-20-*-*-*-*-*-*-*"
        , fgColor = "grey"
        , position = Top
        , commands = [ 
-                      Run Weather "EDDF" ["-t", "FFM: <tempC>°C, humidity <rh>%, wind <windKnots>, <skyCondition>", "-L","10","-H","20","--normal","green","--high","red","--low","lightblue"] 36000
+                      Run Weather "EDDB" ["-t", "Berlin: <tempC>°C, humidity <rh>%, wind <windKnots>, <skyCondition>", "-L","10","-H","20","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Volume "default" "Master" [] 10
                     , Run Cpu ["-L","15","-H","50","--normal","green","--high","red","-p","2"] 10
                     , Run Memory ["-t","Mem: <usedratio>%","-L", "25", "-H", "75", "--low","green","--high","red"] 10
@@ -17,6 +17,6 @@ Config { font = "-misc-fixed-*-*-*-*-20-*-*-*-*-*-*-*"
        , additionalFonts = []
        , border = NoBorder
        , borderColor = ""
-       , template =                  "%cpu% | %memory% | %swap% | %StdinReader% }{ %date% | %default:Master% | %EDDF%"
+       , template =                  "%cpu% | %memory% | %swap% | %StdinReader% }{ %date% | %default:Master% | %EDDB%"
 --       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %EGPF%"
 }
