@@ -30,7 +30,7 @@ main = do
           , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
           , terminal = "gnome-terminal"
           , layoutHook = avoidStruts
-                       $ myLayout
+--                     $ myLayout
                        $ layoutHook defaultConfig
           , logHook = Log.dynamicLogWithPP Log.xmobarPP { Log.ppOutput = hPutStrLn xmproc , Log.ppTitle = Log.xmobarColor "green" "" . Log.shorten 50 }
           , modMask = mod4Mask
@@ -56,44 +56,43 @@ main = do
           , ([(0, xF86XK_Sleep), (mod4Mask .|. shiftMask, xK_Delete)], spawn "xscreensaver-command -lock")
           , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "ifnotrunning firefox" "Web")
           , ([(mod4Mask, xK_d)], wslaunch "ifnotrunning netbeans" "Dev")
-          , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
+--          , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
           , ([(controlMask, xF86XK_Mail), (mod4Mask .|. shiftMask, xK_e)], wslaunch "thunderbird -compose" "Mail")
-          , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
-          , ([(mod4Mask, xK_y)], spawn $ XMonad.terminal defaultConfig)
-          , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
+          , ([(mod4Mask, xK_y)], spawn "gnome-terminal")
+--          , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
           , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "ifnotrunning lyx-2.1.4" "Write")
 
 -- Volume keys
 
-          , ([(0, xF86XK_AudioLowerVolume)], lowerVolume 4 >> return())
-          , ([(0, xF86XK_AudioRaiseVolume)], raiseVolume 4 >> return())
-          , ([(0, xF86XK_AudioMute)], toggleMute >> return())
+--          , ([(0, xF86XK_AudioLowerVolume)], lowerVolume 4 >> return())
+--          , ([(0, xF86XK_AudioRaiseVolume)], raiseVolume 4 >> return())
+--          , ([(0, xF86XK_AudioMute)], toggleMute >> return())
 
-          , ([(mod4Mask .|. mod1Mask, xK_space)], spawn $ rb "play-pause")
-          , ([(mod4Mask .|. mod1Mask, xK_Left)], spawn $ rb "previous")
-          , ([(mod4Mask .|. mod1Mask, xK_Right)], spawn $ rb "next")
-          , ([(mod4Mask, xF86XK_AudioLowerVolume)], spawn $ rb "volume-down")
-          , ([(mod4Mask, xF86XK_AudioRaiseVolume)], spawn $ rb "volume-up")
+--          , ([(mod4Mask .|. mod1Mask, xK_space)], spawn $ rb "play-pause")
+--          , ([(mod4Mask .|. mod1Mask, xK_Left)], spawn $ rb "previous")
+--          , ([(mod4Mask .|. mod1Mask, xK_Right)], spawn $ rb "next")
+--          , ([(mod4Mask, xF86XK_AudioLowerVolume)], spawn $ rb "volume-down")
+--          , ([(mod4Mask, xF86XK_AudioRaiseVolume)], spawn $ rb "volume-up")
         ]
     where
         multiBind = (foldr (++) []) . (map (\(xs,y) -> [(x,y) | x<-xs]))
         wsview id = (windows . view) id
         wslaunch cmd id = spawn cmd >> wsview id >> return()
 
-        myWorkspaces = (map show [1..9]) ++ ["Dev", "Write", "Mail", "Web", "Chat", "Music"]
+        myWorkspaces = (map show [1..9]) ++ ["Dev", "Write", "Mail", "Web"]
 
-        myLayout = onWorkspace "Chat" chatLayout
-            where
-                chatLayout = IM.withIM (12/100) (IM.Role "buddy_list") Grid.Grid
+--        myLayout = onWorkspace "Chat" chatLayout
+--            where
+--                chatLayout = IM.withIM (12/100) (IM.Role "buddy_list") Grid.Grid
 
         myManageHook = composeAll [
-              className =? "Pidgin" --> doShift "Chat"
-            , className =? "Thunderbird" --> doShift "Mail"
+            className =? "Thunderbird" --> doShift "Mail"
+--          ,  className =? "Pidgin" --> doShift "Chat"
             , className =? "Firefox" --> doShift "Web"
             , fmap ("Lyx" `isPrefixOf`) className --> doShift "Write"
-            , className =? "Rhythmbox" --> doShift "Music"
             , fmap ("NetBeans" `isPrefixOf`) className --> doShift "Dev"
+--            , className =? "Rhythmbox" --> doShift "Music"
           ]
 
-	rb a = "rhythmbox-client --no-start --" ++ a
+--	rb a = "rhythmbox-client --no-start --" ++ a
