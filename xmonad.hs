@@ -28,6 +28,7 @@ main = do
         {
             workspaces = myWorkspaces
           , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
+          , terminal = "gnome-terminal"
           , layoutHook = avoidStruts
                        $ myLayout
                        $ layoutHook defaultConfig
@@ -54,12 +55,14 @@ main = do
 
           , ([(0, xF86XK_Sleep), (mod4Mask .|. shiftMask, xK_Delete)], spawn "xscreensaver-command -lock")
           , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "ifnotrunning firefox" "Web")
+          , ([(mod4Mask, xK_d)], wslaunch "ifnotrunning netbeans" "Dev")
           , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
           , ([(controlMask, xF86XK_Mail), (mod4Mask .|. shiftMask, xK_e)], wslaunch "thunderbird -compose" "Mail")
           , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
+          , ([(mod4Mask, xK_y)], spawn $ XMonad.terminal defaultConfig)
           , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
-          , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "lyx" "Write")
+          , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "ifnotrunning lyx-2.1.4" "Write")
 
 -- Volume keys
 
@@ -78,7 +81,7 @@ main = do
         wsview id = (windows . view) id
         wslaunch cmd id = spawn cmd >> wsview id >> return()
 
-        myWorkspaces = (map show [1..9]) ++ ["Write", "Mail", "Web", "Chat", "Music"]
+        myWorkspaces = (map show [1..9]) ++ ["Dev", "Write", "Mail", "Web", "Chat", "Music"]
 
         myLayout = onWorkspace "Chat" chatLayout
             where
@@ -90,6 +93,7 @@ main = do
             , className =? "Firefox" --> doShift "Web"
             , fmap ("Lyx" `isPrefixOf`) className --> doShift "Write"
             , className =? "Rhythmbox" --> doShift "Music"
+            , fmap ("NetBeans" `isPrefixOf`) className --> doShift "Dev"
           ]
 
 	rb a = "rhythmbox-client --no-start --" ++ a
