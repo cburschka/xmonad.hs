@@ -28,7 +28,9 @@ main = do
         {
             workspaces = myWorkspaces
           , manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
-          , layoutHook = avoidStruts $ myLayout $ layoutHook defaultConfig
+          , layoutHook = avoidStruts
+                       $ myLayout
+                       $ layoutHook defaultConfig
           , logHook = Log.dynamicLogWithPP Log.xmobarPP { Log.ppOutput = hPutStrLn xmproc , Log.ppTitle = Log.xmobarColor "green" "" . Log.shorten 50 }
           , modMask = mod4Mask
         } `additionalKeys` multiBind
