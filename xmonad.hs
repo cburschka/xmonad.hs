@@ -62,7 +62,7 @@ main = do
           , ([(0, xF86XK_Favorites)], spawn $ XMonad.terminal defaultConfig)
           , ([(mod4Mask, xK_y)], spawn $ XMonad.terminal defaultConfig)
           , ([(mod4Mask, xF86XK_AudioMute), (mod4Mask, xK_r)], wslaunch "rhythmbox" "Music")
-          , ([(mod4Mask .|. shiftMask, xK_l)], wslaunch "ifnotrunning lyx-2.1.4" "Write")
+          , ([(mod4Mask, xK_w)], wslaunch "ifnotrunning lyx-2.1.4" "Write")
           , ([(mod4Mask, xK_g)], wslaunch "ifnotrunning mendeleydesktop" "Research")
 
 -- Volume keys
