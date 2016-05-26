@@ -55,7 +55,8 @@ main = do
 
           , ([(0, xF86XK_Sleep), (mod4Mask .|. shiftMask, xK_Delete)], spawn "xscreensaver-command -lock")
           , ([(0, xF86XK_HomePage), (mod4Mask, xK_f)], wslaunch "ifnotrunning firefox" "Web")
-          , ([(mod4Mask, xK_d)], wslaunch "ifnotrunning netbeans" "Dev")
+--          , ([(mod4Mask, xK_d)], wslaunch "ifnotrunning netbeans" "Dev")
+          , ([(mod4Mask, xK_d)], wslaunch "ifnotrunning atom" "Dev")
           , ([(0, xF86XK_Messenger), (mod4Mask, xK_c)], wslaunch "pidgin" "Chat")
           , ([(0, xF86XK_Mail), (mod4Mask, xK_e)], wslaunch "thunderbird" "Mail")
           , ([(controlMask, xF86XK_Mail), (mod4Mask .|. shiftMask, xK_e)], wslaunch "thunderbird -compose" "Mail")
@@ -92,6 +93,7 @@ main = do
               className =? "Pidgin" --> doShift "Chat"
             , className =? "Thunderbird" --> doShift "Mail"
             , className =? "Firefox" --> doShift "Web"
+            , className =? "Atom" --> doShift "Dev"
             , fmap ("Lyx" `isPrefixOf`) className --> doShift "Write"
             , className =? "Rhythmbox" --> doShift "Music"
             , fmap ("NetBeans" `isPrefixOf`) className --> doShift "Dev"
