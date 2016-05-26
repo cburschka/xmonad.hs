@@ -90,8 +90,8 @@ main = do
                 chatLayout = IM.withIM (12/100) (IM.Role "buddy_list") Grid.Grid
 
         myManageHook = composeAll [
-              className =? "Pidgin" --> doShift "Chat"
-            , className =? "Thunderbird" --> doShift "Mail"
+            className =? "Thunderbird" --> doShift "Mail"
+            ,  className =? "Pidgin" --> doShift "Chat"
             , className =? "Firefox" --> doShift "Web"
             , className =? "Atom" --> doShift "Dev"
             , fmap ("Lyx" `isPrefixOf`) className --> doShift "Write"
